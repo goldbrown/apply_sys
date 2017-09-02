@@ -1,8 +1,12 @@
 # applysys
 
-> 填写网申记录的界面
-#技术
-vue2.0 + vue-router + axios + webpack
+## 填写网申记录的界面
+截图：
+[applysys](https://drive.google.com/open?id=0B2HttNbiwaPCU1RFNEZHSXVYNEE)
+
+## 技术
+boostrap + vue2.0 + vue-router + axios + webpack
+
 ## Build Setup
 
 ``` bash
