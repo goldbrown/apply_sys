@@ -2,7 +2,7 @@
 
 ## 填写网申记录的界面
 截图：
-![applysys](https://drive.google.com/open?id=0B2HttNbiwaPCU1RFNEZHSXVYNEE)
+![applysys](https://raw.githubusercontent.com/brownlincoln/apply_sys/master/static/screenshots/applysys.png)
 
 ## 技术
 boostrap + vue2.0 + vue-router + axios + webpack
