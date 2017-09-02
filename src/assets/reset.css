@@ -1,0 +1,71 @@
+html,
+body,
+#app {
+  height: 100%;
+}
+
+body {
+  font-family: "Microsoft Yahei", "Hiragino Sans GB", "Helvetica Neue", Helvetica, tahoma, arial, Verdana, sans-serif, "WenQuanYi Micro Hei", "\5B8B\4F53";
+  font-size: 15px;
+  color: #333;
+  background-color: #F1F1F1;
+}
+
+ul,
+ol,
+dl {
+  list-style-type: none;
+}
+
+html,
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+hr,
+p,
+iframe,
+dl,
+dt,
+dd,
+ul,
+ol,
+li,
+pre,
+form,
+button,
+input,
+textarea,
+th,
+td,
+fieldset {
+  margin: 0;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  display: inline-block;
+}
+
+.container {
+  max-width: 1120px;
+}
+
+input {
+  height: 35px;
+  text-indent: 1em;
+  border-radius: 5px;
+  border: 1px solid;
+  display: inline-block;
+}
+
+button {
+  padding: 8px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  border: 1px solid transparent;
+}
