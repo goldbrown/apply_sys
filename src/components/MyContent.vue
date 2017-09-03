@@ -45,7 +45,7 @@ export default {
   },
   methods: {
     addApply: function () {
-      alert('hello')
+      this.$emit('addApply')
     },
     removeApply: function () {
       // console.log(this.flags)
@@ -60,7 +60,8 @@ export default {
       // alert('remove apply')
     },
     updateApply: function () {
-      alert('update apply')
+      // alert('update apply')
+      this.$emit('updateApply')
     },
     switchFlag: function (index) {
       // this.flags[index] = !this.flags[index]

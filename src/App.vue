@@ -1,8 +1,10 @@
 <template>
   <div>
-    <v-header :user="user"></v-header>
-    <v-menu :user="user"></v-menu>
-    <v-content :user="user" :flags="flags" @switchFlag="switchFlag"></v-content>
+    <v-header v-if="!showForm" :user="user"></v-header>
+    <v-menu v-if="!showForm" :user="user"></v-menu>
+    <v-content v-if="!showForm" :user="user" :flags="flags" @switchFlag="switchFlag"
+      @addApply="addApply"></v-content>
+    <v-apply-form v-if="showForm" @closeForm="closeForm"></v-apply-form>
   </div>
 </template>
 
@@ -19,13 +21,15 @@
 import MyHeader from './components/MyHeader.vue'
 import MyContent from './components/MyContent.vue'
 import MyMenu from './components/MyMenu.vue'
+import MyApplyForm from './components/MyApplyForm.vue'
 import axios from 'axios'
 
 export default {
   data () {
     return {
       user: {},
-      flags: []
+      flags: [],
+      showForm: false
     }
   },
   created () {
@@ -46,12 +50,19 @@ export default {
       var tmp = this.flags[index]
       this.flags.splice(index, 1, !tmp)
       // console.log(this.flags)
+    },
+    addApply: function () {
+      this.showForm = !this.showForm
+    },
+    closeForm: function () {
+      this.showForm = !this.showForm
     }
   },
   components: {
     'v-header': MyHeader,
     'v-content': MyContent,
-    'v-menu': MyMenu
+    'v-menu': MyMenu,
+    'v-apply-form': MyApplyForm
   }
 }
 </script>
