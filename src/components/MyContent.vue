@@ -48,27 +48,13 @@ export default {
       this.$emit('addApply')
     },
     removeApply: function () {
-      // console.log(this.flags)
-      for (var i = this.flags.length - 1; i >= 0; i--) {
-        if (this.flags[i] === true) {
-          this.user.apply.splice(i, 1)
-          this.flags.splice(i, 1)
-          // 发起请求，删除数据
-        }
-      }
-      // console.log(this.flags)
-      // alert('remove apply')
+      this.$emit('removeApply')
     },
     updateApply: function () {
-      // alert('update apply')
       this.$emit('updateApply')
     },
     switchFlag: function (index) {
-      // this.flags[index] = !this.flags[index]
-      // console.log(index)
       this.$emit('switchFlag', index)
-      // console.log(index)
-      // console.log(this.flags)
     }
   }
 }

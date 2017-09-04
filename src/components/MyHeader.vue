@@ -11,47 +11,59 @@
           <li class="nav-item active">
             <a class="nav-link" href="javascript:void">首页 <span class="sr-only">(current)</span></a>
           </li>
-          <li class="nav-item">
+          <!--<li class="nav-item">
             <a class="nav-link" href="javascript:void">讨论区</a>
-          </li>
+          </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void">个人主页</a>
+            <a class="nav-link" href="javascript:void" @click="refreshPage">刷新页面</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="javascript:void">关于</a>
-          </li>
+          </li>         
         </ul>
         <form class="form-inline mt-2 mt-md-0">
+          <a class="nav-link  user-bar" href="javascript:void">{{user.mail}}</a>
+        </form>
+        <!--<form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
-        </form>
+        </form>-->
       </div>
     </nav>
 </template>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./Dashboard Template for Bootstrap_files/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="./Dashboard Template for Bootstrap_files/bootstrap.min.js"></script>
+    <script src="./Dashboard Template for Bootstrap_files/holder.min.js"></script>
+    <script src="./Dashboard Template for Bootstrap_files/jquery.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./Dashboard Template for Bootstrap_files/ie10-viewport-bug-workaround.js"></script>
 <script>
 export default {
   props: {
     user: Object
+  },
+  methods: {
+    refreshPage: function () {
+      this.$emit('refreshPage')
+    }
   }
 }
 </script>
 <style scoped>
-    @import url('http://getbootstrap.com/favicon.ico');
-    @import url('./Dashboard Template for Bootstrap_files/bootstrap.min.css');
-    @import url('./Dashboard Template for Bootstrap_files/dashboard.css');
+@import url('http://getbootstrap.com/favicon.ico');
+@import url('./Dashboard Template for Bootstrap_files/bootstrap.min.css');
+@import url('./Dashboard Template for Bootstrap_files/dashboard.css');
     .header {
         width: 100%;
         float: right;
         height: 50px;   
         background-color: rgba(7, 7, 7, 1);
     }
-    .userCenter {
-        font-size: 20px;
-        text-align: right;
-        line-height: 20px;
-        height: 20px; 
-        font-family: 微软雅黑,宋体;
-        color: rgba(255, 255, 255, 1);
-        font-weight: bold;
+    .user-bar {
+        /*float: right;*/
+        color: white;
     }
 </style>
