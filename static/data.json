@@ -1,95 +1,65 @@
 {
     "user": {
-        "user_id": 1,
+        "userId": 1,
         "mail": "1978151299@qq.com",
         "apply": [
             {
-                "apply_id": 1,
-                "company": "Alibaba",
-                "apply_date": "2017-09-21",
-                "end_date": "2017-09-23",
+                "applyId": 1,
+                "companyName": "Alibaba",
+                "applyDate": "2017-09-21",
+                "endDate": "2017-09-23",
                 "status": "pending",
                 "recommend": "内推",
                 "anticipate": "70%",
                 "result": "拿到offer"
             },
             {
-                "apply_id": 2,
-                "company": "Baidu",
-                "apply_date": "2017-07-30",
-                "end_date": "2017-08-30",
+                "applyId": 2,
+                "companyName": "Baidu",
+                "applyDate": "2017-07-30",
+                "endDate": "2017-08-30",
                 "status": "pending",
                 "recommend": "",
                 "anticipate": "70%",
                 "result": "拿到offer"
             },
             {
-                "apply_id": 1,
-                "company": "Alibaba",
-                "apply_date": "2017-07-20",
-                "end_date": "2017-08-30",
+                "applyId": 1,
+                "companyName": "Alibaba",
+                "applyDate": "2017-09-21",
+                "endDate": "2017-09-23",
                 "status": "pending",
                 "recommend": "内推",
                 "anticipate": "70%",
                 "result": "拿到offer"
             },
             {
-                "apply_id": 2,
-                "company": "Baidu",
-                "apply_date": "2017-07-30",
-                "end_date": "2017-08-30",
+                "applyId": 2,
+                "companyName": "Baidu",
+                "applyDate": "2017-07-30",
+                "endDate": "2017-08-30",
+                "status": "pending",
+                "recommend": "",
+                "anticipate": "70%",
+                "result": "拿到offer"
+            },
+            {
+                "applyId": 1,
+                "companyName": "Alibaba",
+                "applyDate": "2017-09-21",
+                "endDate": "2017-09-23",
                 "status": "pending",
                 "recommend": "内推",
                 "anticipate": "70%",
                 "result": "拿到offer"
             },
             {
-                "apply_id": 1,
-                "company": "Alibaba",
-                "apply_date": "2017-07-20",
-                "end_date": "2017-08-30",
+                "applyId": 2,
+                "companyName": "Baidu",
+                "applyDate": "2017-07-30",
+                "endDate": "2017-08-30",
                 "status": "pending",
-                "recommend": "内推",
-                "anticipate": "70%",
-                "result": "拿到offer"
-            },
-            {
-                "apply_id": 2,
-                "company": "Baidu",
-                "apply_date": "2017-07-30",
-                "end_date": "2017-08-30",
-                "status": "pending",
-                "recommend": "内推",
-                "anticipate": "70%",
-                "result": "拿到offer"
-            },
-            {
-                "apply_id": 1,
-                "company": "Alibaba",
-                "apply_date": "2017-07-20",
-                "end_date": "2017-08-30",
-                "status": "pending",
-                "recommend": "内推",
-                "anticipate": "70%",
-                "result": "拿到offer"
-            },
-            {
-                "apply_id": 2,
-                "company": "Baidu",
-                "apply_date": "2017-07-30",
-                "end_date": "2017-08-30",
-                "status": "pending",
-                "recommend": "内推",
-                "anticipate": "70%",
-                "result": "拿到offer"
-            },
-            {
-                "apply_id": 1,
-                "company": "Alibaba",
-                "apply_date": "2017-07-20",
-                "end_date": "2017-08-30",
-                "status": "pending",
-                "recommend": "内推",
+                "recommend": "",
                 "anticipate": "70%",
                 "result": "拿到offer"
             }

@@ -24,10 +24,10 @@
                 <tr v-for="(item, index) in user.apply">
                   <th v-if="!flags[index]"><i class="fa fa-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th v-if="flags[index]"><i class="fa fa-check-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
-                  <th class="ui-state-default">{{item.company}}</th>
-                  <th class="ui-state-default">{{item.apply_date}}</th>
+                  <th class="ui-state-default">{{item.companyName}}</th>
+                  <th class="ui-state-default">{{item.applyDate}}</th>
                   <th class="ui-state-default">{{item.status}}</th>
-                  <th class="ui-state-default">{{item.end_date}}</th>
+                  <th class="ui-state-default">{{item.endDate}}</th>
                   <th class="ui-state-default">{{item.recommend}}</th>
                   <th class="ui-state-default">{{item.anticipate}}</th>
                   <th class="ui-state-default">{{item.result}}</th>

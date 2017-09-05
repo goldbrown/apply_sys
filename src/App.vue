@@ -24,6 +24,7 @@ import MyContent from './components/MyContent.vue'
 import MyMenu from './components/MyMenu.vue'
 import MyApplyForm from './components/MyApplyForm.vue'
 import axios from 'axios'
+// import qs from 'qs'
 
 export default {
   data () {
@@ -38,12 +39,24 @@ export default {
     }
   },
   created () {
-    this.init()
+    this.initData()
   },
   methods: {
-    init: function () {
-      axios.get('../static/data.json').then((res) => {
-        this.user = res.data.user
+    initData: function () {
+      axios({
+        method: 'get',
+        url: global.backendURL + '/apply/get',
+        params: {
+          userId: 1
+        },
+        responseType: 'json'
+      })
+      .then((res) => {
+        // console.log(res.data)
+        this.user = {
+          userId: res.data.userId,
+          apply: res.data.apply
+        }
         var len = this.user.apply.length
         this.flags = new Array(len)
         for (var i = 0; i < len; i++) {
@@ -52,6 +65,24 @@ export default {
         this.selected = null
         // console.log('this is the request data')
         // console.log(this.user)
+      })
+      .catch(function (error) {
+        if (error.response) {
+          // The request was made and the server responded with a status code
+          // that falls out of the range of 2xx
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          // The request was made but no response was received
+          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+          // http.ClientRequest in node.js
+          console.log(error.request)
+        } else {
+          // Something happened in setting up the request that triggered an Error
+          console.log('Error', error.message)
+        }
+        console.log(error.config)
       })
     },
     switchFlag: function (index) {
@@ -69,17 +100,69 @@ export default {
       this.showForm = !this.showForm
       this.selected = null
     },
-    submitApply: function () {
-      alert('成功提交')
+    submitApply: function (submitData) {
+      // alert('成功提交')
+      // console.log(submitData)
+      // 根据applyId判断是add还是update
+      var tmp
+      if (submitData.applyId) {
+        tmp = '/apply/update'
+      } else {
+        tmp = '/apply/add'
+      }
+      axios({
+        method: 'get',
+        url: global.backendURL + tmp,
+        params: submitData
+      })
+      .then((res) => {
+        console.log(res.data)
+      })
+      .catch(function (error) {
+        if (error.response) {
+          console.log(error.response.data)
+          console.log(error.response.status)
+          console.log(error.response.headers)
+        } else if (error.request) {
+          console.log(error.request)
+        } else {
+          console.log('Error', error.message)
+        }
+        console.log(error.config)
+      })
       this.selected = null
     },
     // 移除申请记录
     removeApply: function () {
       for (var i = this.flags.length - 1; i >= 0; i--) {
         if (this.flags[i] === true) {
-          this.user.apply.splice(i, 1)
-          this.flags.splice(i, 1)
+          // 模拟删除
+          // this.user.apply.splice(i, 1)
+          // this.flags.splice(i, 1)
           // 发起请求，删除数据
+          console.log('applyId', this.user.apply)
+          axios({
+            method: 'get',
+            url: global.backendURL + '/apply/remove',
+            params: {
+              applyId: this.user.apply[i].applyId
+            }
+          })
+          .then((res) => {
+            console.log(res.data)
+          })
+          .catch(function (error) {
+            if (error.response) {
+              console.log(error.response.data)
+              console.log(error.response.status)
+              console.log(error.response.headers)
+            } else if (error.request) {
+              console.log(error.request)
+            } else {
+              console.log('Error', error.message)
+            }
+            console.log(error.config)
+          })
         }
       }
     },
@@ -99,12 +182,12 @@ export default {
       }
       if (count === 1) {
         this.selected = marked
-        // alert('成功更新' + marked)
         this.showForm = !this.showForm
+        // 提交请求
       }
     },
     refreshPage: function () {
-      this.init()
+      this.initData()
     }
   },
   components: {

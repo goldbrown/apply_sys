@@ -22,7 +22,7 @@
           </li>         
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-          <a class="nav-link  user-bar" href="javascript:void">{{user.mail}}</a>
+          <a class="nav-link  user-bar" href="javascript:void">用户名{{user.username}}</a>
         </form>
         <!--<form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search">
