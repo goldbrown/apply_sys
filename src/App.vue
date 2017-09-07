@@ -1,9 +1,15 @@
 <template>
   <div>
-    <v-header v-if="!showForm" :user="user" @refreshPage="refreshPage"></v-header>
-    <v-menu v-if="!showForm" :user="user"></v-menu>
-    <v-content v-if="!showForm" :user="user" :flags="flags" @switchFlag="switchFlag" @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply"></v-content>
-    <v-apply-form v-if="showForm" :user="user" :selected="selected" @closeForm="closeForm" @submitApply="submitApply"></v-apply-form>
+    <v-header v-if="!showForm && !showReglogin" :user="user" @refreshPage="refreshPage" @register="register" 
+      @login="login" @logout="logout"></v-header>
+    <v-menu v-if="!showForm && !showReglogin" :user="user"></v-menu>
+    <v-content v-if="!showForm && !showReglogin" :user="user" :flags="flags" @switchFlag="switchFlag" 
+      @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply"></v-content>
+    <v-apply-form v-if="showForm && !showReglogin" :user="user" :selected="selected" @closeForm="closeForm"
+       @submitApply="submitApply"></v-apply-form>
+    <v-reglogin v-if="showReglogin && !showForm" @registerUser="registerUser" @loginUser="loginUser" 
+      @cancelReglogin="cancelReglogin"></v-reglogin>
+    <!-- <v-reglogin></v-reglogin> -->
   </div>
 </template>
 
@@ -23,8 +29,11 @@ import MyHeader from './components/MyHeader.vue'
 import MyContent from './components/MyContent.vue'
 import MyMenu from './components/MyMenu.vue'
 import MyApplyForm from './components/MyApplyForm.vue'
+import MyReglogin from './components/MyReglogin.vue'
 import axios from 'axios'
 // import qs from 'qs'
+axios.defaults.withCredentials = true
+axios.defaults.headers.common['Content-Type'] = 'application/json;charset=UTF-8'
 
 export default {
   data () {
@@ -35,7 +44,9 @@ export default {
       // 是否显示表单
       showForm: false,
       // 用于更新操作
-      selected: Number
+      selected: Number,
+      // 用于注册和登录页面
+      showReglogin: false
     }
   },
   created () {
@@ -46,17 +57,25 @@ export default {
       axios({
         method: 'get',
         url: global.backendURL + '/apply/get',
-        params: {
-          userId: 1
-        },
         responseType: 'json'
       })
-      .then((res) => {
+      .then(function (res) {
         // console.log(res.data)
+        for (var index = 0; index < res.data.apply.length; index++) {
+          if (res.data.apply[index].applyDate !== undefined) {
+            res.data.apply[index].applyDate = this.toDateString(res.data.apply[index].applyDate, 'yyyy-MM-dd')
+          }
+          if (res.data.apply[index].endDate !== undefined) {
+            res.data.apply[index].endDate = this.toDateString(res.data.apply[index].endDate, 'yyyy-MM-dd')
+          }
+        }
         this.user = {
           userId: res.data.userId,
+          username: res.data.username,
+          mail: res.data.mail,
           apply: res.data.apply
         }
+        console.log(this.user)
         var len = this.user.apply.length
         this.flags = new Array(len)
         for (var i = 0; i < len; i++) {
@@ -65,25 +84,70 @@ export default {
         this.selected = null
         // console.log('this is the request data')
         // console.log(this.user)
-      })
+      }.bind(this))
       .catch(function (error) {
-        if (error.response) {
-          // The request was made and the server responded with a status code
-          // that falls out of the range of 2xx
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-        } else if (error.request) {
-          // The request was made but no response was received
-          // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
-          // http.ClientRequest in node.js
-          console.log(error.request)
-        } else {
-          // Something happened in setting up the request that triggered an Error
-          console.log('Error', error.message)
-        }
-        console.log(error.config)
+        this.handleException(error)
+      }.bind(this))
+    },
+    // 处理注册，登录，退出的情况
+    register: function () {
+      this.showReglogin = !this.showReglogin
+      console.log('showReglogin' + this.showReglogin)
+    },
+    registerUser: function (userData) {
+      console.log(userData)
+      axios({
+        method: 'get',
+        url: global.backendURL + '/reg',
+        params: userData
       })
+      .then(function (res) {
+        console.log(res.data)
+        this.showReglogin = !this.showReglogin
+        this.userId = res.data.userId
+        this.initData()
+      }.bind(this))
+      .catch(function (error) {
+        this.handleException(error)
+      }.bind(this))
+    },
+    login: function () {
+      this.showReglogin = !this.showReglogin
+    },
+    loginUser: function (userData) {
+      console.log(userData)
+      axios({
+        method: 'get',
+        url: global.backendURL + '/login',
+        params: userData
+      })
+      .then(function (res) {
+        console.log(res.data)
+        this.showReglogin = !this.showReglogin
+        this.userId = res.data.userId
+        this.initData()
+      }.bind(this))
+      .catch(function (error) {
+        this.handleException(error)
+      }.bind(this))
+    },
+    logout: function () {
+      this.userId = 0
+      axios({
+        method: 'get',
+        url: global.backendURL + '/logout'
+      })
+      .then(function (res) {
+        console.log(res.data)
+        this.initData()
+      }.bind(this))
+      .catch(function (error) {
+        this.handleException(error)
+        this.initData()
+      }.bind(this))
+    },
+    cancelReglogin: function () {
+      this.showReglogin = !this.showReglogin
     },
     switchFlag: function (index) {
       // console.log(index)
@@ -93,7 +157,11 @@ export default {
     },
     // 增加申请记录
     addApply: function () {
-      this.showForm = !this.showForm
+      if (!this.isEmptyJson(this.user)) {
+        this.showForm = !this.showForm
+      } else {
+        alert('请先注册或者登录')
+      }
       // alert('addApply')
     },
     closeForm: function () {
@@ -102,7 +170,7 @@ export default {
     },
     submitApply: function (submitData) {
       // alert('成功提交')
-      // console.log(submitData)
+      console.log(submitData)
       // 根据applyId判断是add还是update
       var tmp
       if (submitData.applyId) {
@@ -115,86 +183,106 @@ export default {
         url: global.backendURL + tmp,
         params: submitData
       })
-      .then((res) => {
+      .then(function (res) {
         console.log(res.data)
-      })
+        this.showForm = !this.showForm
+        this.initData()
+      }.bind(this))
       .catch(function (error) {
-        if (error.response) {
-          console.log(error.response.data)
-          console.log(error.response.status)
-          console.log(error.response.headers)
-        } else if (error.request) {
-          console.log(error.request)
-        } else {
-          console.log('Error', error.message)
-        }
-        console.log(error.config)
-      })
+        this.handleException(error)
+      }.bind(this))
       this.selected = null
     },
     // 移除申请记录
     removeApply: function () {
-      for (var i = this.flags.length - 1; i >= 0; i--) {
-        if (this.flags[i] === true) {
-          // 模拟删除
-          // this.user.apply.splice(i, 1)
-          // this.flags.splice(i, 1)
-          // 发起请求，删除数据
-          console.log('applyId', this.user.apply)
-          axios({
-            method: 'get',
-            url: global.backendURL + '/apply/remove',
-            params: {
-              applyId: this.user.apply[i].applyId
-            }
-          })
-          .then((res) => {
-            console.log(res.data)
-          })
-          .catch(function (error) {
-            if (error.response) {
-              console.log(error.response.data)
-              console.log(error.response.status)
-              console.log(error.response.headers)
-            } else if (error.request) {
-              console.log(error.request)
-            } else {
-              console.log('Error', error.message)
-            }
-            console.log(error.config)
-          })
+      if (!this.isEmptyJson(this.user)) {
+        for (var i = this.flags.length - 1; i >= 0; i--) {
+          if (this.flags[i] === true) {
+            // 模拟删除
+            // this.user.apply.splice(i, 1)
+            // this.flags.splice(i, 1)
+            // 发起请求，删除数据
+            console.log('applyId', this.user.apply)
+            axios({
+              method: 'get',
+              url: global.backendURL + '/apply/remove',
+              params: {
+                applyId: this.user.apply[i].applyId
+              }
+            })
+            .then(function (res) {
+              console.log(res.data)
+              this.initData()
+            }.bind(this))
+            .catch(function (error) {
+              this.handleException(error)
+            }.bind(this))
+          }
         }
+        this.initData()
+      } else {
+        alert('请先注册或者登录')
       }
     },
     // 更新申请记录
     updateApply: function () {
-      var marked
-      var count = 0
-      for (var i = this.flags.length - 1; i >= 0; i--) {
-        if (this.flags[i] === true) {
-          marked = i
-          this.flags[i] = false
-          count++
+      if (!this.isEmptyJson(this.user)) {
+        var marked
+        var count = 0
+        for (var i = this.flags.length - 1; i >= 0; i--) {
+          if (this.flags[i] === true) {
+            marked = i
+            this.flags[i] = false
+            count++
+          }
         }
-      }
-      if (count > 1 || count === 0) {
-        alert('一次只能更新一个，请选择一个')
-      }
-      if (count === 1) {
-        this.selected = marked
-        this.showForm = !this.showForm
-        // 提交请求
+        if (count > 1 || count === 0) {
+          alert('一次只能更新一个，请选择一个')
+        }
+        if (count === 1) {
+          this.selected = marked
+          this.showForm = !this.showForm
+          // 提交请求
+        }
+      } else {
+        alert('请先注册或者登录')
       }
     },
     refreshPage: function () {
       this.initData()
+    },
+    handleException: function (error) {
+      if (error.response) {
+        // The request was made and the server responded with a status code
+        // that falls out of the range of 2xx
+        console.log(error.response.data)
+        console.log(error.response.status)
+        console.log(error.response.headers)
+      } else if (error.request) {
+        // The request was made but no response was received
+        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+        // http.ClientRequest in node.js
+        console.log(error.request)
+      } else {
+        // Something happened in setting up the request that triggered an Error
+        console.log('Error', error.message)
+      }
+      console.log(error.config)
+    },
+    isEmptyJson: function (obj) {
+      var t
+      for (t in obj) {
+        return !1
+      }
+      return !0
     }
   },
   components: {
     'v-header': MyHeader,
     'v-content': MyContent,
     'v-menu': MyMenu,
-    'v-apply-form': MyApplyForm
+    'v-apply-form': MyApplyForm,
+    'v-reglogin': MyReglogin
   }
 }
 </script>

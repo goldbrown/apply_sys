@@ -10,7 +10,8 @@
               <thead>
                 <tr>
                   <th></th>
-                 <th class="ui-state-default sorting">公司  <i class="fa fa-sort" aria-hidden="true"></i></th>
+                 <th class="ui-state-default sorting">公司 <i class="fa fa-sort" aria-hidden="true"></i></th>
+                 <th class="ui-state-default sorting">公司招聘官网</th>
                   <th class="ui-state-default sorting">申请日期  <i class="fa fa-sort" aria-hidden="true"></i></th>
                   <th class="ui-state-default sorting">状态  <i class="fa fa-sort" aria-hidden="true"></i></th>
                   <th class="ui-stae-default sorting">最后一面的日期 <i class="fa fa-sort" aria-hidden="true"></i></th>
@@ -25,6 +26,7 @@
                   <th v-if="!flags[index]"><i class="fa fa-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th v-if="flags[index]"><i class="fa fa-check-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th class="ui-state-default">{{item.companyName}}</th>
+                  <th class="ui-state-default"><a :href="'' + item.website">{{item.website}}</a></th>
                   <th class="ui-state-default">{{item.applyDate}}</th>
                   <th class="ui-state-default">{{item.status}}</th>
                   <th class="ui-state-default">{{item.endDate}}</th>

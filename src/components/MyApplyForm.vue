@@ -7,6 +7,10 @@
         <input type="text" v-model="companyName" class="form-control" id="company-name" placeholder="比如，阿里">
       </div>
       <div class="form-group">
+        <label for="website">公司招聘网站（可选）</label>
+        <input type="text" v-model="website" class="form-control" id="website" placeholder="可以直接从浏览器上粘贴过来">
+      </div>
+      <div class="form-group">
         <label for="apply_date">申请日期<i class="fa fa-asterisk" aria-hidden="true"></i></label>
         <input type="date" v-model="applyDate" class="form-control" id="apply_date" placeholder="比如，2017-09-04">
       </div>
@@ -44,9 +48,10 @@ export default {
     selected: Number
   },
   data () {
-    var companyName, applyDate, endDate, status, recommend, anticipate, result, applyId
+    var companyName, website, applyDate, endDate, status, recommend, anticipate, result, applyId
     if (this.selected !== null) {
       companyName = this.user.apply[this.selected].companyName
+      website = this.user.apply[this.selected].website
       applyDate = this.user.apply[this.selected].applyDate
       endDate = this.user.apply[this.selected].endDate
       status = this.user.apply[this.selected].status
@@ -57,6 +62,7 @@ export default {
     }
     return {
       companyName: companyName,
+      website: website,
       applyDate: applyDate,
       endDate: endDate,
       status: status,
@@ -72,9 +78,11 @@ export default {
     },
     submitApply: function () {
       var submitData = {
-        userId: this.userId,
+        // userId: this.userId,
+        userId: this.user.userId,
         applyId: this.applyId,
         companyName: this.companyName,
+        website: this.website,
         applyDate: this.applyDate,
         endDate: this.endDate,
         status: this.status,

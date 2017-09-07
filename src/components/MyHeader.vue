@@ -1,28 +1,35 @@
 <template>
     
         <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-      <a class="navbar-brand" href="localhost:8080">网申记录系统</a>
+      <a class="navbar-brand" href="#">网申记录系统</a>
       <button class="navbar-toggler d-lg-none collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
 
       <div class="navbar-collapse collapse" id="navbarsExampleDefault">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
+          <!--<li class="nav-item active">
             <a class="nav-link" href="javascript:void">首页 <span class="sr-only">(current)</span></a>
-          </li>
+          </li>-->
           <!--<li class="nav-item">
             <a class="nav-link" href="javascript:void">讨论区</a>
           </li>-->
+          <!--<li class="nav-item">
+            <a class="nav-link" href="106.14.123.17:80">刷新页面</a>
+          </li>-->
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void" @click="refreshPage">刷新页面</a>
-          </li>
+            <a class="nav-link" href="javascript:void" @click="register">注册</a>
+          </li> 
           <li class="nav-item">
-            <a class="nav-link" href="javascript:void">关于</a>
+            <a class="nav-link" href="javascript:void" @click="login">登录</a>
+          </li> 
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void" @click="logout">退出</a>
           </li>         
         </ul>
         <form class="form-inline mt-2 mt-md-0">
-          <a class="nav-link  user-bar" href="javascript:void">用户名{{user.username}}</a>
+          <a v-if="user.username" class="nav-link  user-bar" href="javascript:void">用户名：{{user.username}}</a>
+          <a v-if="!user.username" class="nav-link  user-bar" href="javascript:void" @click="login">未登录</a>
         </form>
         <!--<form class="form-inline mt-2 mt-md-0">
           <input class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search">
@@ -43,11 +50,21 @@
 <script>
 export default {
   props: {
-    user: Object
+    user: Object,
+    userId: Number
   },
   methods: {
-    refreshPage: function () {
-      this.$emit('refreshPage')
+    // refreshPage: function () {
+    //   this.$emit('refreshPage')
+    // },
+    register: function () {
+      this.$emit('register')
+    },
+    login: function () {
+      this.$emit('login')
+    },
+    logout: function () {
+      this.$emit('logout')
     }
   }
 }
