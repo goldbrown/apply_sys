@@ -26,7 +26,7 @@
                   <th v-if="!flags[index]"><i class="fa fa-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th v-if="flags[index]"><i class="fa fa-check-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th class="ui-state-default">{{item.companyName}}</th>
-                  <th class="ui-state-default"><a :href="'' + item.website">{{item.website}}</a></th>
+                  <th class="ui-state-default"><a :href="'' + item.website" target="_blank">{{item.website}}</a></th>
                   <th class="ui-state-default">{{item.applyDate}}</th>
                   <th class="ui-state-default">{{item.status}}</th>
                   <th class="ui-state-default">{{item.endDate}}</th>
