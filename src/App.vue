@@ -7,8 +7,8 @@
       @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply"></v-content>
     <v-apply-form v-if="showForm && !showReglogin" :user="user" :selected="selected" @closeForm="closeForm"
        @submitApply="submitApply"></v-apply-form>
-    <v-reglogin v-if="showReglogin && !showForm" @registerUser="registerUser" @loginUser="loginUser" 
-      @cancelReglogin="cancelReglogin"></v-reglogin>
+    <v-reglogin v-if="showReglogin && !showForm" :showUsernameInfo="showUsernameInfo" @registerUser="registerUser" @existedUsername="existedUsername"
+     @loginUser="loginUser" @cancelReglogin="cancelReglogin"></v-reglogin>
     <!-- <v-reglogin></v-reglogin> -->
   </div>
 </template>
@@ -46,7 +46,9 @@ export default {
       // 用于更新操作
       selected: Number,
       // 用于注册和登录页面
-      showReglogin: false
+      showReglogin: false,
+      // 显示用户名占用信息
+      showUsernameInfo: String
     }
   },
   created () {
@@ -75,7 +77,7 @@ export default {
           mail: res.data.mail,
           apply: res.data.apply
         }
-        console.log(this.user)
+        // console.log(this.user)
         var len = this.user.apply.length
         this.flags = new Array(len)
         for (var i = 0; i < len; i++) {
@@ -92,21 +94,43 @@ export default {
     // 处理注册，登录，退出的情况
     register: function () {
       this.showReglogin = !this.showReglogin
-      console.log('showReglogin' + this.showReglogin)
+      // console.log('showReglogin' + this.showReglogin)
     },
     registerUser: function (userData) {
-      console.log(userData)
+      // console.log(userData)
       axios({
         method: 'get',
         url: global.backendURL + '/reg',
         params: userData
       })
       .then(function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         this.showReglogin = !this.showReglogin
         this.userId = res.data.userId
         this.initData()
       }.bind(this))
+      .catch(function (error) {
+        this.handleException(error)
+        alert('注册失败，请刷新页面或者删除cookie后再注册')
+      }.bind(this))
+    },
+    existedUsername: function (username) {
+      var userData = {
+        username: username
+      }
+      // alert('exist username')
+      axios({
+        method: 'get',
+        url: global.backendURL + '/username/exist',
+        params: userData
+      })
+      .then(function (res) {
+        // console.log(res.data)
+        if (res.data.status === -1) {
+          alert('用户名' + username + '已被占用')
+          // this.showUsernameInfo = res.data.msg
+        }
+      })
       .catch(function (error) {
         this.handleException(error)
       }.bind(this))
@@ -115,20 +139,21 @@ export default {
       this.showReglogin = !this.showReglogin
     },
     loginUser: function (userData) {
-      console.log(userData)
+      // console.log(userData)
       axios({
         method: 'get',
         url: global.backendURL + '/login',
         params: userData
       })
       .then(function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         this.showReglogin = !this.showReglogin
         this.userId = res.data.userId
         this.initData()
       }.bind(this))
       .catch(function (error) {
         this.handleException(error)
+        alert('登录失败，请刷新页面或者删除cookie后再登录')
       }.bind(this))
     },
     logout: function () {
@@ -138,7 +163,7 @@ export default {
         url: global.backendURL + '/logout'
       })
       .then(function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         this.initData()
       }.bind(this))
       .catch(function (error) {
@@ -170,7 +195,7 @@ export default {
     },
     submitApply: function (submitData) {
       // alert('成功提交')
-      console.log(submitData)
+      // console.log(submitData)
       // 根据applyId判断是add还是update
       var tmp
       if (submitData.applyId) {
@@ -184,7 +209,7 @@ export default {
         params: submitData
       })
       .then(function (res) {
-        console.log(res.data)
+        // console.log(res.data)
         this.showForm = !this.showForm
         this.initData()
       }.bind(this))
@@ -202,7 +227,7 @@ export default {
             // this.user.apply.splice(i, 1)
             // this.flags.splice(i, 1)
             // 发起请求，删除数据
-            console.log('applyId', this.user.apply)
+            // console.log('applyId', this.user.apply)
             axios({
               method: 'get',
               url: global.backendURL + '/apply/remove',
@@ -211,7 +236,7 @@ export default {
               }
             })
             .then(function (res) {
-              console.log(res.data)
+              // console.log(res.data)
               this.initData()
             }.bind(this))
             .catch(function (error) {
