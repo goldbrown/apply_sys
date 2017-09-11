@@ -20,11 +20,19 @@
       </div>
       <div class="form-group">
         <label for="status">当前状态<i class="fa fa-asterisk" aria-hidden="true"></i></label>
-        <input type="text" v-model="status"  class="form-control" id="status" placeholder="比如，HR面结束">
+        <select id="status" class="form-control" v-model="status">
+          <option value="待网申">待网申</option>
+          <option value="已网申">已网申</option>
+          <option value="简历评估中">简历评估中（包括笔试）</option>
+          <option value="面试中">面试中</option>
+          <option value="拿到offer">拿到offer</option>
+          <option value="壮烈牺牲">壮烈牺牲</option>
+        </select>
+        <!-- <input type="text" v-model="status"  class="form-control" id="status" placeholder="比如，HR面结束"> -->
       </div>
       <div class="form-group">
-        <label for="recommend">内推信息（可选）</label>
-        <input type="text" v-model="recommend" class="form-control" id="recommend" placeholder="比如，有内推，内推人XXX">
+        <label for="remark">备注（可选）</label>
+        <input type="text" v-model="remark" class="form-control" id="remark" placeholder="比如，面试日期，笔试日期">
       </div>
       <div class="form-group">
         <label for="anticipate">面试表现（可选）</label>
@@ -48,14 +56,14 @@ export default {
     selected: Number
   },
   data () {
-    var companyName, website, applyDate, endDate, status, recommend, anticipate, result, applyId
+    var companyName, website, applyDate, endDate, status, remark, anticipate, result, applyId
     if (this.selected !== null) {
       companyName = this.user.apply[this.selected].companyName
       website = this.user.apply[this.selected].website
       applyDate = this.user.apply[this.selected].applyDate
       endDate = this.user.apply[this.selected].endDate
       status = this.user.apply[this.selected].status
-      recommend = this.user.apply[this.selected].recommend
+      remark = this.user.apply[this.selected].remark
       anticipate = this.user.apply[this.selected].anticipate
       result = this.user.apply[this.selected].result
       applyId = this.user.apply[this.selected].applyId
@@ -66,7 +74,7 @@ export default {
       applyDate: applyDate,
       endDate: endDate,
       status: status,
-      recommend: recommend,
+      remark: remark,
       anticipate: anticipate,
       result: result,
       applyId: applyId
@@ -86,7 +94,7 @@ export default {
         applyDate: this.applyDate,
         endDate: this.endDate,
         status: this.status,
-        recommend: this.recommend,
+        remark: this.remark,
         anticipate: this.anticipate,
         result: this.result
       }

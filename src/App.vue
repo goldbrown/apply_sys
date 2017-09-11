@@ -3,8 +3,8 @@
     <v-header v-if="!showForm && !showReglogin" :user="user" @refreshPage="refreshPage" @register="register" 
       @login="login" @logout="logout"></v-header>
     <v-menu v-if="!showForm && !showReglogin" :user="user"></v-menu>
-    <v-content v-if="!showForm && !showReglogin" :user="user" :flags="flags" @switchFlag="switchFlag" 
-      @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply"></v-content>
+    <v-content v-if="!showForm && !showReglogin" :user="user" :sortedApply="sortedApply" :sortBy="sortBy" :flags="flags" @switchFlag="switchFlag" 
+      @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply" @setSortKey="setSortKey"></v-content>
     <v-apply-form v-if="showForm && !showReglogin" :user="user" :selected="selected" @closeForm="closeForm"
        @submitApply="submitApply"></v-apply-form>
     <v-reglogin v-if="showReglogin && !showForm" :showUsernameInfo="showUsernameInfo" @registerUser="registerUser" @existedUsername="existedUsername"
@@ -48,7 +48,22 @@ export default {
       // 用于注册和登录页面
       showReglogin: false,
       // 显示用户名占用信息
-      showUsernameInfo: String
+      showUsernameInfo: String,
+      // 按哪个排序，默认按申请日期
+      sortBy: 'applyDate'
+    }
+  },
+  computed: {
+    sortedApply: function () {
+      // console.log(this.user.username)
+      // console.log(this.sortBy)
+      if (this.isEmptyJson(this.user)) {
+        return []
+      } else {
+        return this.user.apply.sort(function (x, y) {
+          return x[this.sortBy].localeCompare(y[this.sortBy], 'zh')
+        }.bind(this))
+      }
     }
   },
   created () {
@@ -300,6 +315,10 @@ export default {
         return !1
       }
       return !0
+    },
+    // 设置sort key
+    setSortKey: function (labelname) {
+      this.sortBy = labelname
     }
   },
   components: {
