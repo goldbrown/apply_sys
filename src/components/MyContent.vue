@@ -8,10 +8,9 @@
             <button class="btn btn-info" @click="updateApply">更新</button>
             <table class="table table-striped">
               <thead>
-                <tr class="row">
+                <tr>
                   <th></th>
-                 <th class="ui-state-default sorting">公司 <i class="fa fa-sort" aria-hidden="true"></i></th>
-                 <th class="ui-state-default sorting col-md-3 website">公司招聘官网</th>
+                 <th class="ui-state-default sorting">公司及招聘官网 <i class="fa fa-sort" aria-hidden="true"></i></th>
                   <th class="ui-state-default sorting">申请日期  <i class="fa fa-sort" aria-hidden="true"></i></th>
                   <th class="ui-state-default sorting">状态  <i class="fa fa-sort" aria-hidden="true"></i></th>
                   <th class="ui-stae-default sorting">最后一面的日期 <i class="fa fa-sort" aria-hidden="true"></i></th>
@@ -22,11 +21,10 @@
               </thead>
               <tbody>
                 
-                <tr class="row col-xs-12" v-for="(item, index) in user.apply">
+                <tr v-for="(item, index) in user.apply">
                   <th v-if="!flags[index]"><i class="fa fa-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
                   <th v-if="flags[index]"><i class="fa fa-check-square-o" aria-hidden="true"  @click="switchFlag(index)"></i></th>
-                  <th class="ui-state-default">{{item.companyName}}</th>
-                  <th class="ui-state-default col-md-3 website"><a :href="'' + item.website" target="_blank">{{item.website}}</a></th>
+                  <th class="ui-state-default"><a :href="'' + item.website" target="_blank">{{item.companyName}}</a></th>
                   <th class="ui-state-default">{{item.applyDate}}</th>
                   <th class="ui-state-default">{{item.status}}</th>
                   <th class="ui-state-default">{{item.endDate}}</th>
@@ -64,7 +62,4 @@ export default {
 <style scoped>
 @import url('https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css');
 
-.website {
-  overflow: hidden;
-}
 </style>
