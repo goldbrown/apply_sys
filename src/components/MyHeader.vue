@@ -1,6 +1,6 @@
 <template>
     
-        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
       <a class="navbar-brand" href="#">网申记录系统</a>
       <button class="navbar-toggler d-lg-none collapsed" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -17,6 +17,17 @@
           <!--<li class="nav-item">
             <a class="nav-link" href="106.14.123.17:80">刷新页面</a>
           </li>-->
+          <li class="nav-item">
+            <a class="nav-link" href="javascript:void" @click="switchShowMe">关于</a>
+          </li>
+          <div v-if="me" class="about-me">
+            <ul>
+              <li>功能：用来集中管理网申记录的系统</li>
+              <li>项目的GitHub地址：<a href="https://github.com/brownlincoln/ApplySystem" target="_blank">ApplySystem</a></li>
+              <li>我的邮箱：chrisliu1314@qq.com</li>
+              <li>有问题可以给我发邮件或者在GitHub提issue</li>
+            </ul>
+          </div>
           <li class="nav-item">
             <a class="nav-link" href="javascript:void" @click="register">注册</a>
           </li> 
@@ -53,6 +64,11 @@ export default {
     user: Object,
     userId: Number
   },
+  data () {
+    return {
+      me: false
+    }
+  },
   methods: {
     // refreshPage: function () {
     //   this.$emit('refreshPage')
@@ -65,6 +81,13 @@ export default {
     },
     logout: function () {
       this.$emit('logout')
+    },
+    switchShowMe: function () {
+      // alert('about me')
+      this.me = !this.me
+    },
+    resetShowMe: function () {
+      this.me = false
     }
   }
 }
@@ -82,5 +105,22 @@ export default {
     .user-bar {
         /*float: right;*/
         color: white;
+    }
+    .about-me {
+      position: absolute;
+      top: 55px;
+      left: 150px;
+      z-index: 100;
+      width: 280px;
+      height: 80px;
+
+      background-color: rgba(10, 10, 10, 0.9);
+      color: white;
+      font-size: 12px;
+      font-family: 宋体, 微软雅黑;
+    }
+    a {
+      text-decoration: none;
+      display: inline-block;
     }
 </style>

@@ -23,7 +23,7 @@
         <select id="status" class="form-control" v-model="status">
           <option value="待网申">待网申</option>
           <option value="已网申">已网申</option>
-          <option value="简历评估中">简历评估中（包括笔试）</option>
+          <option value="已笔试">已笔试</option>
           <option value="面试中">面试中</option>
           <option value="拿到offer">拿到offer</option>
           <option value="壮烈牺牲">壮烈牺牲</option>

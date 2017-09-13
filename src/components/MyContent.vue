@@ -1,6 +1,6 @@
 <template>
-
-  <main class="col-sm-9 ml-sm-auto col-md-10 pt-3" role="main">
+  <div>
+    <main class="col-sm-9 ml-sm-auto col-md-10 pt-3 content" role="main">
           <h2>申请记录</h2>
           <div class="table-responsive">
             <button class="btn btn-success" @click="addApply">增加</button>
@@ -34,7 +34,10 @@
               </tbody>
             </table>
           </div>
-        </main>
+    </main>
+  </div>
+  
+        
 </template>
 <script>
 export default {
@@ -69,4 +72,5 @@ export default {
 .clickable-icon {
   cursor: pointer;
 }
+
 </style>

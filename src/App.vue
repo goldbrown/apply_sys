@@ -1,10 +1,10 @@
 <template>
   <div>
     <v-header v-if="!showForm && !showReglogin" :user="user" @refreshPage="refreshPage" @register="register" 
-      @login="login" @logout="logout"></v-header>
+      @login="login" @logout="logout"></v-header>    
     <v-menu v-if="!showForm && !showReglogin" :user="user"></v-menu>
     <v-content v-if="!showForm && !showReglogin" :user="user" :sortedApply="sortedApply" :sortBy="sortBy" :flags="flags" @switchFlag="switchFlag" 
-      @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply" @setSortKey="setSortKey"></v-content>
+      @addApply="addApply" @updateApply="updateApply" @removeApply="removeApply" @setSortKey="setSortKey"></v-content>    
     <v-apply-form v-if="showForm && !showReglogin" :user="user" :selected="selected" @closeForm="closeForm"
        @submitApply="submitApply"></v-apply-form>
     <v-reglogin v-if="showReglogin && !showForm" :showUsernameInfo="showUsernameInfo" @registerUser="registerUser" @existedUsername="existedUsername"
