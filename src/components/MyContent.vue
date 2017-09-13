@@ -10,13 +10,12 @@
               <thead>
                 <tr>
                   <th></th>
-                 <th class="ui-state-default sorting">公司及招聘官网 <i class="fa fa-sort" labelname="companyName" aria-hidden="true" @click="setSortKey"></i></th>
-                  <th class="ui-state-default sorting">申请日期  <i class="fa fa-sort" labelname="applyDate" aria-hidden="true" @click="setSortKey"></i></th>
-                  <th class="ui-state-default sorting">状态  <i class="fa fa-sort" labelname="status" aria-hidden="true" @click="setSortKey"></i></th>
+                 <th class="ui-state-default sorting">公司及招聘官网 <i class="fa fa-sort clickable-icon" labelname="companyName" aria-hidden="true" @click="setSortKey"></i></th>
+                  <th class="ui-state-default sorting">申请日期  <i class="fa fa-sort clickable-icon" labelname="applyDate" aria-hidden="true" @click="setSortKey"></i></th>
+                  <th class="ui-state-default sorting">状态  <i class="fa fa-sort clickable-icon" labelname="status" aria-hidden="true" @click="setSortKey"></i></th>
                   <th class="ui-stae-default sorting">备注</th>
-                  <th class="ui-stae-default sorting">最后一面的日期 <i class="fa fa-sort" aria-hidden="true"></i></th>
-                  <th class="ui-stae-default sorting">预期结果 <i class="fa fa-sort" aria-hidden="true"></i></th>
-                  <th class="ui-stae-default sorting">实际结果 <i class="fa fa-sort" aria-hidden="true"></i></th>
+                  <th class="ui-stae-default sorting">最后一面的日期</th>
+                  <th class="ui-stae-default sorting">预期结果 </th>
                 </tr>
               </thead>
               <tbody>
@@ -31,7 +30,6 @@
                   <th class="ui-state-default">{{item.remark}}</th>
                   <th class="ui-state-default">{{item.endDate}}</th>
                   <th class="ui-state-default">{{item.anticipate}}</th>
-                  <th class="ui-state-default">{{item.result}}</th>
               </tr>
               </tbody>
             </table>
@@ -68,5 +66,7 @@ export default {
 </script>
 <style scoped>
 @import url('https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.css');
-
+.clickable-icon {
+  cursor: pointer;
+}
 </style>
