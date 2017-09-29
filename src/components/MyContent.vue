@@ -6,6 +6,7 @@
             <button class="btn btn-success" @click="addApply">增加</button>
             <button class="btn btn-danger" @click="removeApply">删除</button>
             <button class="btn btn-info" @click="updateApply">更新</button>
+            <a class="btn btn-success" :href="backendURL + '/apply/download.csv'" download="demo.txt" @click="exportApply">导出记录</a>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -47,6 +48,11 @@ export default {
     sortedApply: Array,
     sortBy: String
   },
+  data () {
+    return {
+      backendURL: global.backendURL
+    }
+  },
   methods: {
     addApply: function () {
       this.$emit('addApply')
@@ -56,6 +62,9 @@ export default {
     },
     updateApply: function () {
       this.$emit('updateApply')
+    },
+    exportApply: function (event) {
+      this.$emit('exportApply', event)
     },
     switchFlag: function (index) {
       this.$emit('switchFlag', index)
