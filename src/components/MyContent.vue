@@ -6,7 +6,9 @@
             <button class="btn btn-success" @click="addApply">增加</button>
             <button class="btn btn-danger" @click="removeApply">删除</button>
             <button class="btn btn-info" @click="updateApply">更新</button>
-            <a class="btn btn-success" :href="backendURL + '/apply/download.csv'" download="demo.txt" @click="exportApply">导出记录</a>
+            <a class="btn btn-success" :href="backendURL + '/apply/download.csv'" download="apply_data.csv" @click="exportApply">导出记录</a>
+            <br/>
+            <label>已网申：{{appliedCount}}&nbsp;&nbsp;</label><label>总记录：{{totalCount}}</label>
             <table class="table table-striped">
               <thead>
                 <tr>
@@ -51,6 +53,31 @@ export default {
   data () {
     return {
       backendURL: global.backendURL
+    }
+  },
+  computed: {
+    appliedCount: function () {
+      if (this.sortedApply.length === 0) {
+        return 0
+      } else {
+        var tmp = 0
+        var len = this.sortedApply.length
+        for (var i = 0; i < len; i++) {
+          var tmpStr = '待网申'
+          // console.log(this.sortedApply[i]['status'])
+          if (tmpStr !== this.sortedApply[i]['status']) {
+            tmp += 1
+          }
+        }
+        return tmp
+      }
+    },
+    totalCount: function () {
+      if (this.sortedApply.length === 0) {
+        return 0
+      } else {
+        return this.sortedApply.length
+      }
     }
   },
   methods: {

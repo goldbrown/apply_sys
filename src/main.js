@@ -57,3 +57,10 @@ Vue.prototype.handleAxiosException = function (error) {
   }
   console.log(error.config)
 }
+Vue.prototype.isEmptyJson = function (obj) {
+  var t
+  for (t in obj) {
+    return !1
+  }
+  return !0
+}
