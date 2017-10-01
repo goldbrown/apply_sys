@@ -51,7 +51,9 @@ export default {
       // 显示用户名占用信息
       showUsernameInfo: String,
       // 按哪个排序，默认按申请日期
-      sortBy: 'applyDate'
+      sortBy: 'applyDate',
+      // 用作排序是升序还是倒序
+      counter: Number
     }
   },
   computed: {
@@ -61,9 +63,15 @@ export default {
       if (this.isEmptyJson(this.user)) {
         return []
       } else {
-        return this.user.apply.sort(function (x, y) {
-          return x[this.sortBy].localeCompare(y[this.sortBy], 'zh')
-        }.bind(this))
+        if (this.counter % 2 === 0) {
+          return this.user.apply.sort(function (x, y) {
+            return x[this.sortBy].localeCompare(y[this.sortBy], 'zh')
+          }.bind(this))
+        } else {
+          return this.user.apply.sort(function (x, y) {
+            return y[this.sortBy].localeCompare(x[this.sortBy], 'zh')
+          }.bind(this))
+        }
       }
     }
   },
@@ -102,6 +110,7 @@ export default {
         this.selected = null
         // console.log('this is the request data')
         // console.log(this.user)
+        this.counter = 0
       }.bind(this))
       .catch(function (error) {
         this.handleException(error)
@@ -328,6 +337,12 @@ export default {
     // 设置sort key
     setSortKey: function (labelname) {
       this.sortBy = labelname
+      // 计数器加一
+      this.incrementCounter()
+    },
+    // 将计数器加一
+    incrementCounter: function () {
+      this.counter += 1
     }
   },
   components: {
