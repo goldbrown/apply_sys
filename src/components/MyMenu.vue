@@ -3,6 +3,12 @@
     <nav class="col-sm-3 col-md-2 d-none d-sm-block bg-light sidebar">
           <ul class="nav nav-pills flex-column">
             <li class="nav-item">
+              <label class="nav-link my-bulletin">由于本人即将毕业，没有学生优惠了，负担不起服务器的费用。
+                  所以，2018年4月6日网站将无法访问，请尽快“导出记录”（导出的记录可以用excel打开）。实在抱歉！</label>
+            </li>
+          </ul>
+          <ul class="nav nav-pills flex-column">
+            <li class="nav-item">
               <a class="nav-link active">招聘网站</a>
             </li>
             <li class="nav-item">
@@ -54,5 +60,8 @@ export default {
 }
 </script>
 <style scoped>
-
+  .my-bulletin {
+    border: 1px solid red;
+    color: red;
+  }
 </style>
